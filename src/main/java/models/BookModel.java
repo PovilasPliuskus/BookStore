@@ -1,4 +1,25 @@
 package models;
 
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.List;
+
+@Getter
+@Setter
 public class BookModel {
+
+    private Integer id;
+    private String title;
+    private Integer pageCount;
+
+    public BookModel() {
+
+    }
+
+    public BookModel(Integer id, String title, Integer pageCount) {
+        this.id = id;
+        this.title = title;
+        this.pageCount = pageCount;
+    }
 }
