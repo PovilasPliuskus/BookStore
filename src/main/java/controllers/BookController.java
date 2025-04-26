@@ -24,7 +24,6 @@ public class BookController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @Transactional
     public Response createBook(BookModel bookModel) {
 
         BookModel response = bookService.createBook(bookModel);

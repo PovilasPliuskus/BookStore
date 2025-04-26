@@ -14,7 +14,6 @@ public class CustomerDAO {
     @Inject
     private EntityManager em;
 
-    @Transactional
     public void save(CustomerEntity customer) {
         em.persist(customer);
     }

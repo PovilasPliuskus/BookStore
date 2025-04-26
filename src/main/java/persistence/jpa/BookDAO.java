@@ -14,7 +14,6 @@ public class BookDAO {
     @Inject
     private EntityManager em;
 
-    @Transactional
     public void save(BookEntity book) {
         em.persist(book);
     }
