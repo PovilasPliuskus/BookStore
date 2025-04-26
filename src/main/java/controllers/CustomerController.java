@@ -1,29 +1,27 @@
 package controllers;
 
-import entities.BookEntity;
-import models.BookModel;
-import services.BookService;
+import models.CustomerModel;
+import services.CustomerService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
 @ApplicationScoped
-@Path("book")
-public class BookController {
+@Path("customer")
+public class CustomerController {
 
     @Inject
-    BookService bookService;
+    CustomerService customerService;
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createBook(BookModel bookModel) {
-        BookModel response = bookService.createBook(bookModel);
+    public Response createCustomer(CustomerModel customerModel) {
+        CustomerModel response = customerService.createCustomer(customerModel);
 
         return Response
                 .status(Response.Status.CREATED)
@@ -34,8 +32,8 @@ public class BookController {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getBook(@PathParam("id") int id) {
-        BookModel response = bookService.findBookById(id);
+    public Response getCustomer(@PathParam("id") Integer id) {
+        CustomerModel response = customerService.findCustomerById(id);
 
         return Response
                 .status(Response.Status.OK)
@@ -45,8 +43,8 @@ public class BookController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllBooks() {
-        List<BookModel> response = bookService.findAllBooks();
+    public Response getAllCustomers() {
+        List<CustomerModel> response = customerService.findAllCustomers();
 
         return Response
                 .status(Response.Status.OK)
