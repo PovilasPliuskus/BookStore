@@ -1,6 +1,6 @@
 package persistence.jpa;
 
-import book.store.bookstore.entities.Customer;
+import entities.CustomerEntity;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -15,15 +15,15 @@ public class CustomerDAO {
     private EntityManager em;
 
     @Transactional
-    public void save(Customer customer) {
+    public void save(CustomerEntity customer) {
         em.persist(customer);
     }
 
-    public List<Customer> findAll() {
-        return em.createQuery("SELECT c FROM Customer c", Customer.class).getResultList();
+    public List<CustomerEntity> findAll() {
+        return em.createQuery("SELECT c FROM CustomerEntity c", CustomerEntity.class).getResultList();
     }
 
-    public Customer findById(int id) {
-        return em.find(Customer.class, id);
+    public CustomerEntity findById(int id) {
+        return em.find(CustomerEntity.class, id);
     }
 }

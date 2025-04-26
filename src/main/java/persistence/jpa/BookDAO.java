@@ -1,6 +1,6 @@
 package persistence.jpa;
 
-import book.store.bookstore.entities.Book;
+import entities.BookEntity;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -15,15 +15,15 @@ public class BookDAO {
     private EntityManager em;
 
     @Transactional
-    public void save(Book book) {
+    public void save(BookEntity book) {
         em.persist(book);
     }
 
-    public List<Book> findAll() {
-        return em.createQuery("SELECT b FROM Book b", Book.class).getResultList();
+    public List<BookEntity> findAll() {
+        return em.createQuery("SELECT b FROM BookEntity b", BookEntity.class).getResultList();
     }
 
-    public Book findById(int id) {
-        return em.find(Book.class, id);
+    public BookEntity findById(int id) {
+        return em.find(BookEntity.class, id);
     }
 }

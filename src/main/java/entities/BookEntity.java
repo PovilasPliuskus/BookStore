@@ -1,4 +1,4 @@
-package book.store.bookstore.entities;
+package entities;
 
 import lombok.Setter;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import java.util.List;
 @Table(name = "BOOK")
 @Getter
 @Setter
-public class Book {
+public class BookEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,13 +32,13 @@ public class Book {
             joinColumns = @JoinColumn(name = "FK_BOOK_ID"),
             inverseJoinColumns = @JoinColumn(name = "FK_PURCHASE_ID")
     )
-    private List<Purchase> purchases = new ArrayList<>();
+    private List<PurchaseEntity> purchases = new ArrayList<>();
 
-    public Book() {
+    public BookEntity() {
 
     }
 
-    public Book(String title, Integer pageCount) {
+    public BookEntity(String title, Integer pageCount) {
         this.title = title;
         this.pageCount = pageCount;
     }

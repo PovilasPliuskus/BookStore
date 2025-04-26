@@ -1,4 +1,4 @@
-package book.store.bookstore.entities;
+package entities;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "PURCHASE")
 @Getter
 @Setter
-public class Purchase {
+public class PurchaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,17 +21,17 @@ public class Purchase {
 
     @ManyToOne
     @JoinColumn(name = "FK_CUSTOMER_ID")
-    private Customer customer;
+    private CustomerEntity customer;
 
-    public Purchase() {
+    public PurchaseEntity() {
 
     }
 
-    public Purchase(String status) {
+    public PurchaseEntity(String status) {
         this.status = status;
     }
 
-    public Purchase(String status, Customer customer) {
+    public PurchaseEntity(String status, CustomerEntity customer) {
         this(status);
         this.customer = customer;
     }

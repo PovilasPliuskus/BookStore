@@ -1,6 +1,6 @@
 package persistence.jpa;
 
-import book.store.bookstore.entities.Purchase;
+import entities.PurchaseEntity;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -15,15 +15,15 @@ public class PurchaseDAO {
     private EntityManager em;
 
     @Transactional
-    public void save(Purchase purchase) {
+    public void save(PurchaseEntity purchase) {
         em.persist(purchase);
     }
 
-    public List<Purchase> findAll() {
-        return em.createQuery("SELECT p FROM Purchase p", Purchase.class).getResultList();
+    public List<PurchaseEntity> findAll() {
+        return em.createQuery("SELECT p FROM PurchaseEntity p", PurchaseEntity.class).getResultList();
     }
 
-    public Purchase findById(int id) {
-        return em.find(Purchase.class, id);
+    public PurchaseEntity findById(int id) {
+        return em.find(PurchaseEntity.class, id);
     }
 }

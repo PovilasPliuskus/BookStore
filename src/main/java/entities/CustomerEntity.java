@@ -1,4 +1,4 @@
-package book.store.bookstore.entities;
+package entities;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +11,7 @@ import java.util.List;
 @Table(name = "CUSTOMER")
 @Getter
 @Setter
-public class Customer {
+public class CustomerEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,18 +26,18 @@ public class Customer {
     private String lastName;
 
     @OneToMany(mappedBy = "customer")
-    private List<Purchase> purchases = new ArrayList<>();
+    private List<PurchaseEntity> purchases = new ArrayList<>();
 
-    public Customer() {
+    public CustomerEntity() {
 
     }
 
-    public Customer(String firstName, String lastName) {
+    public CustomerEntity(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public Customer(String firstName, String lastName, List<Purchase> purchases) {
+    public CustomerEntity(String firstName, String lastName, List<PurchaseEntity> purchases) {
         this(firstName, lastName);
         this.purchases = purchases;
     }
