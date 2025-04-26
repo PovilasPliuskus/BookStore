@@ -1,11 +1,23 @@
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
->
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head/>
 <h:body>
-    <h1>Hello World!</h1>
+    <h2>Customers:</h2>
+    <ol>
+        <ui:repeat value="#{JPACustomers.customers}" var="customer">
+            <li><h:link value="#{customer.firstName} #{customer.lastName}"/></li>
+        </ui:repeat>
+    </ol>
+
+    <h:form>
+        <label>First name:</label>
+        <h:inputText value="#{JPACustomers.customerToCreate.firstName}" required="true" />
+        <label>Last name:</label>
+        <h:inputText value="#{JPACustomers.customerToCreate.lastName}" required="true" />
+        <h:commandButton value="Add new customer" action="#{JPACustomers.createCustomer}" />
+    </h:form>
+
 </h:body>
 </html>
