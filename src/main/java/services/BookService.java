@@ -7,6 +7,8 @@ import persistence.jpa.BookDAO;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @RequestScoped
 public class BookService {
@@ -23,5 +25,31 @@ public class BookService {
         bookDAO.save(bookEntity);
         bookModel.setId(bookEntity.getId());
         return bookModel;
+    }
+
+    @Transactional
+    public BookModel findBookById(int id) {
+        BookEntity bookEntity = bookDAO.findById(id);
+        BookModel bookModel = new BookModel();
+        bookModel.setId(bookEntity.getId());
+        bookModel.setTitle(bookEntity.getTitle());
+        bookModel.setPageCount(bookEntity.getPageCount());
+
+        return bookModel;
+    }
+
+    @Transactional
+    public List<BookModel> findAllBooks() {
+        List<BookEntity> bookEntities = bookDAO.findAll();
+        List<BookModel> bookModels = new ArrayList<BookModel>();
+        for (BookEntity bookEntity : bookEntities) {
+            BookModel bookModel = new BookModel();
+            bookModel.setId(bookEntity.getId());
+            bookModel.setTitle(bookEntity.getTitle());
+            bookModel.setPageCount(bookEntity.getPageCount());
+            bookModels.add(bookModel);
+        }
+
+        return bookModels;
     }
 }
