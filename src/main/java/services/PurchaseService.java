@@ -61,7 +61,6 @@ public class PurchaseService {
             PurchaseModel purchaseModel = new PurchaseModel();
             purchaseModel.setId(purchaseEntity.getId());
             purchaseModel.setStatus(purchaseEntity.getStatus());
-            purchaseModels.add(purchaseModel);
 
             List<BookModel> bookModels = new ArrayList<>();
             for (BookEntity bookEntity : purchaseEntity.getBooks()) {
@@ -78,6 +77,7 @@ public class PurchaseService {
 
         return purchaseModels;
     }
+
 
     @Transactional
     public void addBook(Integer purchaseId, BookModel bookModel) {
