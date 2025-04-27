@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "PURCHASE")
@@ -22,6 +24,9 @@ public class PurchaseEntity {
     @ManyToOne
     @JoinColumn(name = "FK_CUSTOMER_ID")
     private CustomerEntity customer;
+
+    @ManyToMany(mappedBy = "purchases", fetch = FetchType.EAGER)
+    private List<BookEntity> books = new ArrayList<>();
 
     public PurchaseEntity() {
 

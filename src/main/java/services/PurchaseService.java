@@ -1,7 +1,10 @@
 package services;
 
+import entities.BookEntity;
 import entities.PurchaseEntity;
+import models.BookModel;
 import models.PurchaseModel;
+import persistence.jpa.BookDAO;
 import persistence.jpa.PurchaseDAO;
 
 import javax.enterprise.context.RequestScoped;
@@ -15,6 +18,9 @@ public class PurchaseService {
 
     @Inject
     private PurchaseDAO purchaseDAO;
+
+    @Inject
+    private BookDAO bookDAO;
 
     @Transactional
     public PurchaseModel createPurchase(PurchaseModel purchaseModel) {
@@ -33,6 +39,16 @@ public class PurchaseService {
         purchaseModel.setId(purchaseEntity.getId());
         purchaseModel.setStatus(purchaseEntity.getStatus());
 
+        List<BookModel> bookModels = new ArrayList<>();
+        for (BookEntity bookEntity : purchaseEntity.getBooks()) {
+            BookModel bookModel = new BookModel();
+            bookModel.setId(bookEntity.getId());
+            bookModel.setTitle(bookEntity.getTitle());
+            bookModel.setPageCount(bookEntity.getPageCount());
+            bookModels.add(bookModel);
+        }
+        purchaseModel.setBooks(bookModels);
+
         return purchaseModel;
     }
 
@@ -40,13 +56,39 @@ public class PurchaseService {
     public List<PurchaseModel> findAllPurchases() {
         List<PurchaseEntity> purchaseEntities = purchaseDAO.findAll();
         List<PurchaseModel> purchaseModels = new ArrayList<>();
+
         for (PurchaseEntity purchaseEntity : purchaseEntities) {
             PurchaseModel purchaseModel = new PurchaseModel();
             purchaseModel.setId(purchaseEntity.getId());
             purchaseModel.setStatus(purchaseEntity.getStatus());
             purchaseModels.add(purchaseModel);
+
+            List<BookModel> bookModels = new ArrayList<>();
+            for (BookEntity bookEntity : purchaseEntity.getBooks()) {
+                BookModel bookModel = new BookModel();
+                bookModel.setId(bookEntity.getId());
+                bookModel.setTitle(bookEntity.getTitle());
+                bookModel.setPageCount(bookEntity.getPageCount());
+                bookModels.add(bookModel);
+            }
+            purchaseModel.setBooks(bookModels);
+
+            purchaseModels.add(purchaseModel);
         }
 
         return purchaseModels;
+    }
+
+    @Transactional
+    public void addBook(Integer purchaseId, BookModel bookModel) {
+        PurchaseEntity purchaseEntity = purchaseDAO.findById(purchaseId);
+
+        BookEntity bookEntity = new BookEntity();
+        bookEntity.setTitle(bookModel.getTitle());
+        bookEntity.setPageCount(bookModel.getPageCount());
+
+        bookEntity.getPurchases().add(purchaseEntity);
+
+        bookDAO.save(bookEntity);
     }
 }
