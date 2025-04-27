@@ -25,7 +25,7 @@ public class CustomerEntity {
     @Basic(optional = false)
     private String lastName;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
     private List<PurchaseEntity> purchases = new ArrayList<>();
 
     public CustomerEntity() {

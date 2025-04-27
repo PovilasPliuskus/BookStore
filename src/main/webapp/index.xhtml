@@ -7,7 +7,13 @@
     <h2>Customers:</h2>
     <ol>
         <ui:repeat value="#{JPACustomers.customers}" var="customer">
-            <li><h:link value="#{customer.firstName} #{customer.lastName}"/></li>
+            <li><h:link value="#{customer.firstName} #{customer.lastName}" outcome="/purchases?customerId=#{customer.id}"/></li>
+            <span>Purchases:</span>
+            <ul>
+                <ui:repeat value="#{customer.purchases}" var="purchase">
+                    <li>#{purchase.status}</li>
+                </ui:repeat>
+            </ul>
         </ui:repeat>
     </ol>
 

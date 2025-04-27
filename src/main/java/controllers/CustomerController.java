@@ -1,6 +1,7 @@
 package controllers;
 
 import models.CustomerModel;
+import models.PurchaseModel;
 import services.CustomerService;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -49,6 +50,19 @@ public class CustomerController {
         return Response
                 .status(Response.Status.OK)
                 .entity(response)
+                .build();
+    }
+
+    @PUT
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addPurchase(@PathParam("id") Integer id, PurchaseModel purchaseModel) {
+
+        customerService.addPurchase(id, purchaseModel);
+
+        return Response
+                .status(Response.Status.OK)
                 .build();
     }
 }
