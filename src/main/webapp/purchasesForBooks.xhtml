@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head/>
+<h:body>
+    <h2>Purchases that have books with the title #{JPAPurchasesForBooks.book.title}</h2>
+
+    <ol>
+        <ui:repeat value="#{JPAPurchasesForBooks.purchases}" var="purchase">
+            <li><h:link value="Purchase ID: #{purchase.id}, Status: #{purchase.status}" outcome="/books?purchaseId=#{purchase.id}"/></li>
+        </ui:repeat>
+    </ol>
+    <h:link outcome="index?faces-redirect=true" value="Back to customer's page"/>
+
+</h:body>
+</html>

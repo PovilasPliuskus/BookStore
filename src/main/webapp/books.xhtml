@@ -10,7 +10,7 @@
     <h2>Books in the purchase #{JPABooksForPurchase.purchase.status}</h2>
     <ol>
         <ui:repeat value="#{JPABooksForPurchase.purchase.books}" var="book">
-            <li><h:link value="#{book.title} #{book.pageCount}" outcome="/purchasesForBook?bookId=#{book.id}"/></li>
+            <li><h:link value="#{book.title} #{book.pageCount}" outcome="/purchasesForBooks?bookId=#{book.id}"/></li>
         </ui:repeat>
     </ol>
     <h2>Add book to purchase:</h2>

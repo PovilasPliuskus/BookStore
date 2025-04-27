@@ -91,4 +91,31 @@ public class PurchaseService {
 
         bookDAO.save(bookEntity);
     }
+
+    @Transactional
+    public List<PurchaseModel> findPurchasesByBookId(Integer bookId) {
+        BookEntity bookEntity = bookDAO.findById(bookId);
+
+        List<PurchaseModel> purchaseModels = new ArrayList<>();
+        for (PurchaseEntity purchaseEntity : bookEntity.getPurchases()) {
+            PurchaseModel purchaseModel = new PurchaseModel();
+            purchaseModel.setId(purchaseEntity.getId());
+            purchaseModel.setStatus(purchaseEntity.getStatus());
+
+            List<BookModel> bookModels = new ArrayList<>();
+            for (BookEntity be : purchaseEntity.getBooks()) {
+                BookModel bm = new BookModel();
+                bm.setId(be.getId());
+                bm.setTitle(be.getTitle());
+                bm.setPageCount(be.getPageCount());
+                bookModels.add(bm);
+            }
+            purchaseModel.setBooks(bookModels);
+
+            purchaseModels.add(purchaseModel);
+        }
+
+        return purchaseModels;
+    }
+
 }
