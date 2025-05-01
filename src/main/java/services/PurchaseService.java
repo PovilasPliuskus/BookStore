@@ -118,4 +118,13 @@ public class PurchaseService {
         return purchaseModels;
     }
 
+    @Transactional
+    public PurchaseModel updatePurchase(PurchaseModel purchaseModel) {
+        PurchaseEntity purchaseEntity = purchaseDAO.findById(purchaseModel.getId());
+        purchaseEntity.setStatus(purchaseModel.getStatus());
+
+        purchaseDAO.update(purchaseEntity);
+
+        return purchaseModel;
+    }
 }

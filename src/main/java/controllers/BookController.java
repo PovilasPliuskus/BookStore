@@ -53,4 +53,16 @@ public class BookController {
                 .entity(response)
                 .build();
     }
+
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateBook(BookModel bookModel) {
+        BookModel response = bookService.updateBook(bookModel);
+
+        return Response
+                .status(Response.Status.OK)
+                .entity(response)
+                .build();
+    }
 }

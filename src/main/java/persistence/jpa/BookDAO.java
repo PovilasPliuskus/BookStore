@@ -25,4 +25,8 @@ public class BookDAO {
     public BookEntity findById(int id) {
         return em.find(BookEntity.class, id);
     }
+
+    public BookEntity update(BookEntity book) {
+        return em.merge(book);
+    }
 }

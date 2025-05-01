@@ -25,4 +25,8 @@ public class PurchaseDAO {
     public PurchaseEntity findById(int id) {
         return em.find(PurchaseEntity.class, id);
     }
+
+    public PurchaseEntity update(PurchaseEntity purchase) {
+        return em.merge(purchase);
+    }
 }

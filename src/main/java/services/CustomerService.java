@@ -88,4 +88,15 @@ public class CustomerService {
 
         purchaseDAO.save(purchaseEntity);
     }
+
+    @Transactional
+    public CustomerModel updateCustomer(CustomerModel customerModel) {
+        CustomerEntity customerEntity = customerDAO.findById(customerModel.getId());
+        customerEntity.setFirstName(customerModel.getFirstName());
+        customerEntity.setLastName(customerModel.getLastName());
+
+        customerDAO.update(customerEntity);
+
+        return customerModel;
+    }
 }

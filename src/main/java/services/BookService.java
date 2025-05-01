@@ -52,4 +52,15 @@ public class BookService {
 
         return bookModels;
     }
+
+    @Transactional
+    public BookModel updateBook(BookModel bookModel) {
+        BookEntity bookEntity = bookDAO.findById(bookModel.getId());
+        bookEntity.setTitle(bookModel.getTitle());
+        bookEntity.setPageCount(bookModel.getPageCount());
+
+        bookDAO.update(bookEntity);
+
+        return bookModel;
+    }
 }

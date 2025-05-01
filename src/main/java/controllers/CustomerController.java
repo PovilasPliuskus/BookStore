@@ -54,15 +54,14 @@ public class CustomerController {
     }
 
     @PUT
-    @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addPurchase(@PathParam("id") Integer id, PurchaseModel purchaseModel) {
-
-        customerService.addPurchase(id, purchaseModel);
+    public Response updateCustomer(CustomerModel customerModel) {
+        CustomerModel response = customerService.updateCustomer(customerModel);
 
         return Response
                 .status(Response.Status.OK)
+                .entity(response)
                 .build();
     }
 }

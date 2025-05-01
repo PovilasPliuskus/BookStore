@@ -52,4 +52,16 @@ public class PurchaseController {
                 .entity(response)
                 .build();
     }
+
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updatePurchase(PurchaseModel purchaseModel) {
+        PurchaseModel response = purchaseService.updatePurchase(purchaseModel);
+
+        return Response
+                .status(Response.Status.OK)
+                .entity(response)
+                .build();
+    }
 }

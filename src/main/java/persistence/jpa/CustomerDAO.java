@@ -26,7 +26,7 @@ public class CustomerDAO {
         return em.find(CustomerEntity.class, id);
     }
 
-    public void update(CustomerEntity customer) {
-        em.merge(customer);
+    public CustomerEntity update(CustomerEntity customer) {
+        return em.merge(customer);
     }
 }
