@@ -86,8 +86,6 @@ public class CustomerService {
         purchaseEntity.setStatus(purchaseModel.getStatus());
         purchaseEntity.setCustomer(customerEntity);
 
-        //komentaras
-
         purchaseDAO.save(purchaseEntity);
     }
 }
