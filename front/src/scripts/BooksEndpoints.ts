@@ -1,3 +1,5 @@
+import { CreateBookRequest, UpdateBookRequest } from "../interfaces";
+
 export const fetchAllBooks = async (): Promise<any> => {
   try {
     const response = await fetch("http://localhost:9999/BookStore/api/book", {
@@ -14,5 +16,75 @@ export const fetchAllBooks = async (): Promise<any> => {
   } catch (error) {
     console.error("Error in fetchAllBooks: ", error);
     throw error;
+  }
+};
+
+export const fetchBook = async (bookId: string): Promise<any> => {
+  try {
+    const response = await fetch(
+      `http://localhost:9999/BookStore/api/book/${bookId}`,
+      {
+        method: "GET",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`Error fetching data: ${response.statusText}`);
+    }
+
+    console.log("Retrieved response calling fetchBook: ", response);
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error in fetchBook: ", error);
+    throw error;
+  }
+};
+
+export const UpdateBook = async (
+  updateBookRequest: UpdateBookRequest
+): Promise<any> => {
+  try {
+    const response = await fetch("http://localhost:9999/BookStore/api/book", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updateBookRequest),
+    });
+
+    if (!response.ok) {
+      console.error(`Error updating book: ${response.statusText}`);
+      return { success: false };
+    }
+
+    const responseData = await response.json();
+    console.log("Book updated successfully: ", responseData);
+  } catch (error) {
+    console.error("Error updating book", error);
+    return { success: false };
+  }
+};
+
+export const AddBook = async (newBook: CreateBookRequest): Promise<any> => {
+  try {
+    const response = await fetch("http://localhost:9999/BookStore/api/book", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newBook),
+    });
+
+    if (!response.ok) {
+      console.error(`Error adding book: ${response.statusText}`);
+      return { success: false };
+    }
+
+    const responseData = await response.json();
+    console.log("Book added successfully: ", responseData);
+  } catch (error) {
+    console.error("Error adding Book", error);
+    return { success: false };
   }
 };
