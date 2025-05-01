@@ -33,12 +33,6 @@ public class JPABooksForPurchase implements Serializable {
     @Inject
     private BookService bookService;
 
-    public String createBook() {
-        purchaseService.addBook(purchase.getId(), bookToAdd);
-
-        return "books?faces-redirect=true&purchaseId=" + purchase.getId();
-    }
-
     @PostConstruct
     private void init() {
         Map<String, String> requestParams = getCurrentInstance()

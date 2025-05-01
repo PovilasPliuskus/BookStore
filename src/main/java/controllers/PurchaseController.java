@@ -1,5 +1,7 @@
 package controllers;
 
+import RequestBodies.AddBookToPurchaseRequest;
+import models.BookModel;
 import models.PurchaseModel;
 import services.PurchaseService;
 
@@ -62,6 +64,17 @@ public class PurchaseController {
         return Response
                 .status(Response.Status.OK)
                 .entity(response)
+                .build();
+    }
+
+    @POST
+    @Path("/addBook")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addBook(AddBookToPurchaseRequest addBookToPurchaseRequest) {
+        purchaseService.addBook(addBookToPurchaseRequest.getPurchaseId(), addBookToPurchaseRequest.getBookId());
+
+        return Response
+                .status(Response.Status.OK)
                 .build();
     }
 }

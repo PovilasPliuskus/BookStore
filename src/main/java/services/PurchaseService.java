@@ -78,20 +78,6 @@ public class PurchaseService {
         return purchaseModels;
     }
 
-
-    @Transactional
-    public void addBook(Integer purchaseId, BookModel bookModel) {
-        PurchaseEntity purchaseEntity = purchaseDAO.findById(purchaseId);
-
-        BookEntity bookEntity = new BookEntity();
-        bookEntity.setTitle(bookModel.getTitle());
-        bookEntity.setPageCount(bookModel.getPageCount());
-
-        bookEntity.getPurchases().add(purchaseEntity);
-
-        bookDAO.save(bookEntity);
-    }
-
     @Transactional
     public List<PurchaseModel> findPurchasesByBookId(Integer bookId) {
         BookEntity bookEntity = bookDAO.findById(bookId);
@@ -126,5 +112,25 @@ public class PurchaseService {
         purchaseDAO.update(purchaseEntity);
 
         return purchaseModel;
+    }
+
+    @Transactional
+    public void addBook(Integer purchaseId, Integer bookId) {
+
+        System.out.println("purchaseId from request: " + purchaseId);
+        System.out.println("bookId from request: " + bookId);
+
+        PurchaseEntity purchaseEntity = purchaseDAO.findById(purchaseId);
+
+        purchaseEntity.ToString();
+
+        BookEntity bookEntity = bookDAO.findById(bookId);
+
+        bookEntity.ToString();
+
+        purchaseEntity.getBooks().add(bookEntity);
+        bookEntity.getPurchases().add(purchaseEntity);
+
+        purchaseDAO.update(purchaseEntity);
     }
 }

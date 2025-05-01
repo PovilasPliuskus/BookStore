@@ -40,4 +40,15 @@ public class PurchaseEntity {
         this(status);
         this.customer = customer;
     }
+
+    public void ToString()
+    {
+        System.out.println("PurchaseEntity:");
+        System.out.println("id: " + id);
+        System.out.println("status: " + status);
+        System.out.println("Books:");
+        for (BookEntity book : books) {
+            System.out.println(book.toString());
+        }
+    }
 }

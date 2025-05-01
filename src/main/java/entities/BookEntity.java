@@ -42,4 +42,12 @@ public class BookEntity {
         this.title = title;
         this.pageCount = pageCount;
     }
+
+    public void ToString()
+    {
+        System.out.println("BookEntity:");
+        System.out.println("id: " + id);
+        System.out.println("title: " + title);
+        System.out.println("pageCount: " + pageCount);
+    }
 }
