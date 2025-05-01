@@ -56,20 +56,36 @@ public class BookService {
 
     @Transactional
     public BookModel updateBook(BookModel bookModel) {
-        BookEntity detached = new BookEntity();
-        detached.setId(bookModel.getId());
-        detached.setTitle(bookModel.getTitle());
-        detached.setPageCount(bookModel.getPageCount());
-        detached.setVersion(bookModel.getVersion());
+        if (bookModel.isForceUpdate()) {
+            // Force update: get the latest version from DB and overwrite it
+            BookEntity existing = bookDAO.findById(bookModel.getId());
+            existing.setTitle(bookModel.getTitle());
+            existing.setPageCount(bookModel.getPageCount());
 
-        BookEntity updated = bookDAO.update(detached);
+            BookEntity updated = bookDAO.update(existing);
 
-        return new BookModel(
-                updated.getId(),
-                updated.getTitle(),
-                updated.getPageCount(),
-                updated.getVersion()
-        );
+            return new BookModel(
+                    updated.getId(),
+                    updated.getTitle(),
+                    updated.getPageCount(),
+                    updated.getVersion()
+            );
+        } else {
+            BookEntity detached = new BookEntity();
+            detached.setId(bookModel.getId());
+            detached.setTitle(bookModel.getTitle());
+            detached.setPageCount(bookModel.getPageCount());
+            detached.setVersion(bookModel.getVersion());
+
+            BookEntity updated = bookDAO.update(detached);
+
+            return new BookModel(
+                    updated.getId(),
+                    updated.getTitle(),
+                    updated.getPageCount(),
+                    updated.getVersion()
+            );
+        }
     }
 
 }

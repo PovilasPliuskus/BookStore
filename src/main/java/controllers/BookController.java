@@ -6,6 +6,7 @@ import services.BookService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.persistence.OptimisticLockException;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -58,11 +59,13 @@ public class BookController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateBook(BookModel bookModel) {
-        BookModel response = bookService.updateBook(bookModel);
-
-        return Response
-                .status(Response.Status.OK)
-                .entity(response)
-                .build();
+        try {
+            BookModel response = bookService.updateBook(bookModel);
+            return Response.status(Response.Status.OK).entity(response).build();
+        } catch (OptimisticLockException e) {
+            return Response.status(Response.Status.CONFLICT)
+                    .entity("Book was updated by someone else. Please reload and try again.")
+                    .build();
+        }
     }
 }

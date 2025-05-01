@@ -84,11 +84,47 @@ function Books() {
   const handleUpdateBook = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await UpdateBook(editBookData);
-      setEditBookId(null);
-      loadBooks();
+      const response = await UpdateBook(editBookData);
+
+      if (response.ok) {
+        setEditBookId(null);
+        loadBooks();
+      } else if (response.status === 409) {
+        const userConfirmed = window.confirm(
+          "This book was modified by someone else. Do you want to override their changes?"
+        );
+
+        if (userConfirmed) {
+          // Retry with force update (add flag if supported by backend)
+          const overrideData = { ...editBookData, forceUpdate: true };
+          const overrideResponse = await fetch(
+            "http://localhost:9999/BookStore/api/book",
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(overrideData),
+            }
+          );
+
+          if (overrideResponse.ok) {
+            alert("Changes overridden successfully.");
+            setEditBookId(null);
+            loadBooks();
+          } else {
+            alert("Override failed. Please try again.");
+          }
+        } else {
+          alert("Update cancelled.");
+        }
+      } else {
+        const text = await response.text();
+        alert(`Update failed: ${text}`);
+      }
     } catch (error) {
       console.error("Error updating book:", error);
+      alert("An error occurred while updating the book.");
     }
   };
 

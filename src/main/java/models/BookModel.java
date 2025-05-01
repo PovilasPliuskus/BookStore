@@ -13,6 +13,7 @@ public class BookModel {
     private String title;
     private Integer pageCount;
     private Integer version;
+    private boolean forceUpdate;
 
     public BookModel() {
 

@@ -43,27 +43,14 @@ export const fetchBook = async (bookId: string): Promise<any> => {
 
 export const UpdateBook = async (
   updateBookRequest: UpdateBookRequest
-): Promise<any> => {
-  try {
-    const response = await fetch("http://localhost:9999/BookStore/api/book", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updateBookRequest),
-    });
-
-    if (!response.ok) {
-      console.error(`Error updating book: ${response.statusText}`);
-      return { success: false };
-    }
-
-    const responseData = await response.json();
-    console.log("Book updated successfully: ", responseData);
-  } catch (error) {
-    console.error("Error updating book", error);
-    return { success: false };
-  }
+): Promise<Response> => {
+  return fetch("http://localhost:9999/BookStore/api/book", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(updateBookRequest),
+  });
 };
 
 export const AddBook = async (newBook: CreateBookRequest): Promise<any> => {
