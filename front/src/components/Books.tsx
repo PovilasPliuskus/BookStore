@@ -25,6 +25,7 @@ function Books() {
     id: "",
     title: "",
     pageCount: 0,
+    version: 0,
   });
 
   const loadBooks = async () => {

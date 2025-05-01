@@ -12,14 +12,16 @@ public class BookModel {
     private Integer id;
     private String title;
     private Integer pageCount;
+    private Integer version;
 
     public BookModel() {
 
     }
 
-    public BookModel(Integer id, String title, Integer pageCount) {
+    public BookModel(Integer id, String title, Integer pageCount, Integer version) {
         this.id = id;
         this.title = title;
         this.pageCount = pageCount;
+        this.version = version;
     }
 }

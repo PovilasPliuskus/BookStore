@@ -5,6 +5,7 @@ import entities.BookEntity;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.OptimisticLockException;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -27,6 +28,11 @@ public class BookDAO {
     }
 
     public BookEntity update(BookEntity book) {
-        return em.merge(book);
+        try {
+            return em.merge(book);
+        } catch (OptimisticLockException e) {
+            System.err.println("Optimistic locking failed for BookEntity with ID: " + book.getId());
+            throw e;
+        }
     }
 }

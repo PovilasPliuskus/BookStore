@@ -30,12 +30,12 @@ public class BookService {
     @Transactional
     public BookModel findBookById(int id) {
         BookEntity bookEntity = bookDAO.findById(id);
-        BookModel bookModel = new BookModel();
-        bookModel.setId(bookEntity.getId());
-        bookModel.setTitle(bookEntity.getTitle());
-        bookModel.setPageCount(bookEntity.getPageCount());
-
-        return bookModel;
+        return new BookModel(
+                bookEntity.getId(),
+                bookEntity.getTitle(),
+                bookEntity.getPageCount(),
+                bookEntity.getVersion()
+        );
     }
 
     @Transactional
@@ -47,6 +47,7 @@ public class BookService {
             bookModel.setId(bookEntity.getId());
             bookModel.setTitle(bookEntity.getTitle());
             bookModel.setPageCount(bookEntity.getPageCount());
+            bookModel.setVersion(bookEntity.getVersion());
             bookModels.add(bookModel);
         }
 
@@ -55,12 +56,20 @@ public class BookService {
 
     @Transactional
     public BookModel updateBook(BookModel bookModel) {
-        BookEntity bookEntity = bookDAO.findById(bookModel.getId());
-        bookEntity.setTitle(bookModel.getTitle());
-        bookEntity.setPageCount(bookModel.getPageCount());
+        BookEntity detached = new BookEntity();
+        detached.setId(bookModel.getId());
+        detached.setTitle(bookModel.getTitle());
+        detached.setPageCount(bookModel.getPageCount());
+        detached.setVersion(bookModel.getVersion());
 
-        bookDAO.update(bookEntity);
+        BookEntity updated = bookDAO.update(detached);
 
-        return bookModel;
+        return new BookModel(
+                updated.getId(),
+                updated.getTitle(),
+                updated.getPageCount(),
+                updated.getVersion()
+        );
     }
+
 }

@@ -25,6 +25,9 @@ public class BookEntity {
     @Basic(optional = false)
     private Integer pageCount;
 
+    @Version
+    private int version;
+
     @Column
     @ManyToMany
     @JoinTable(
