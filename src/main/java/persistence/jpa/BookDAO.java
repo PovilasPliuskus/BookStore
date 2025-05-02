@@ -1,6 +1,7 @@
 package persistence.jpa;
 
 import entities.BookEntity;
+import interfaces.IBookDAO;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -10,7 +11,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @RequestScoped
-public class BookDAO {
+public class BookDAO implements IBookDAO {
 
     @Inject
     private EntityManager em;

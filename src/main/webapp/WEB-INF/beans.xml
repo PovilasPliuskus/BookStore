@@ -12,4 +12,7 @@
     <interceptors>
         <class>interceptors.LoggingInterceptor</class>
     </interceptors>
+    <decorators>
+        <class>persistence.jpa.BookDAODecorator</class>
+    </decorators>
 </beans>
