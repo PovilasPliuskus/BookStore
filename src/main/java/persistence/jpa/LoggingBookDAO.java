@@ -1,6 +1,7 @@
 package persistence.jpa;
 
 import entities.BookEntity;
+import interceptors.LoggedInvocation;
 
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Specializes;
@@ -8,6 +9,7 @@ import java.util.List;
 
 @RequestScoped
 @Specializes
+@LoggedInvocation
 public class LoggingBookDAO extends BookDAO {
 
     @Override

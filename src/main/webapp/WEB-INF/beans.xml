@@ -9,4 +9,7 @@
     <alternatives>
         <!--<class>services.FixedPageCountGeneratorService</class>-->
     </alternatives>
+    <interceptors>
+        <class>interceptors.LoggingInterceptor</class>
+    </interceptors>
 </beans>
