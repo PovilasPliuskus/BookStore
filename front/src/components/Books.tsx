@@ -21,6 +21,7 @@ function Books() {
   });
   const [showModal, setShowModal] = useState(false);
   const [editBookId, setEditBookId] = useState<number | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
   const [editBookData, setEditBookData] = useState<UpdateBookRequest>({
     id: "",
     title: "",
@@ -40,6 +41,39 @@ function Books() {
   useEffect(() => {
     loadBooks();
   }, []);
+
+  const handleGeneratePageCount = async () => {
+    try {
+      setIsGenerating(true);
+      await fetch("http://localhost:9999/BookStore/api/pageCount/start", {
+        method: "POST",
+      });
+
+      // Poll status every second
+      const pollStatus = async () => {
+        const response = await fetch(
+          "http://localhost:9999/BookStore/api/pageCount/status"
+        );
+        const text = await response.text();
+
+        if (text.startsWith("Page count generated:")) {
+          const count = parseInt(text.split(":")[1].trim());
+          setNewBook((prev) => ({
+            ...prev,
+            pageCount: count,
+          }));
+          setIsGenerating(false);
+        } else {
+          setTimeout(pollStatus, 1000);
+        }
+      };
+
+      pollStatus();
+    } catch (error) {
+      console.error("Error generating page count:", error);
+      setIsGenerating(false);
+    }
+  };
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -246,15 +280,28 @@ function Books() {
                       <label htmlFor="pageCount" className="form-label">
                         Page Count
                       </label>
-                      <input
-                        type="number"
-                        className="form-control"
-                        id="pageCount"
-                        name="pageCount"
-                        value={newBook.pageCount}
-                        onChange={(e) => handleInputChange(e)}
-                        required
-                      />
+                      <div className="input-group">
+                        <input
+                          type="number"
+                          className="form-control"
+                          id="pageCount"
+                          name="pageCount"
+                          value={newBook.pageCount}
+                          onChange={(e) => handleInputChange(e)}
+                          required
+                          disabled={isGenerating}
+                        />
+                        <button
+                          type="button"
+                          className="btn btn-outline-secondary"
+                          onClick={handleGeneratePageCount}
+                          disabled={isGenerating}
+                        >
+                          {isGenerating
+                            ? "Generating..."
+                            : "Generate Page Count"}
+                        </button>
+                      </div>
                     </div>
                     <button type="submit" className="btn btn-primary">
                       Add Book
