@@ -1,14 +1,16 @@
 package services;
 
+import interfaces.IPageCountGeneratorStrategy;
+
 import javax.enterprise.context.ApplicationScoped;
 import java.io.Serializable;
+import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 
 @ApplicationScoped
-public class PageCountGeneratorService implements Serializable {
+public class RandomPageCountGeneratorService implements Serializable, IPageCountGeneratorStrategy {
 
     public CompletableFuture<Integer> generatePageCount() {
-
         return CompletableFuture.supplyAsync(() -> {
             try {
                 Thread.sleep(5000);
@@ -16,7 +18,7 @@ public class PageCountGeneratorService implements Serializable {
                 Thread.currentThread().interrupt();
             }
 
-            return 999;
+            return new Random().nextInt(500);
         });
     }
 }

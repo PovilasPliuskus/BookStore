@@ -1,6 +1,7 @@
 package controllers;
 
-import services.PageCountGeneratorService;
+import interfaces.IPageCountGeneratorStrategy;
+import services.FixedPageCountGeneratorService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -19,7 +20,7 @@ public class PageCountGeneratorController {
     private CompletableFuture<Integer> pageCountGenerationTask;
 
     @Inject
-    private PageCountGeneratorService pageCountGeneratorService;
+    private IPageCountGeneratorStrategy pageCountGeneratorService;
 
     @POST
     @Path("/start")
